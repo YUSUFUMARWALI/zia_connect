@@ -6,6 +6,7 @@ import '../../prayer/screens/prayer_screen.dart';
 import '../../announcements/screens/announcements_screen.dart';
 import '../../airport_guide/screens/airport_guide_screen.dart';
 import '../../lost_found/screens/lost_found_screen.dart';
+import '../../support/screens/support_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -61,6 +62,8 @@ class HomeScreen extends StatelessWidget {
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AirportGuideScreen()))),
           buildCard(icon: Icons.luggage, title: 'Lost & Found', subtitle: 'Report or recover lost items',
             onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const LostFoundScreen()))),
+          buildCard(icon: Icons.support_agent, title: 'Help & Support', subtitle: 'Contacts, emergency help and FAQs',
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const SupportScreen()))),
         ],
       ),
     );

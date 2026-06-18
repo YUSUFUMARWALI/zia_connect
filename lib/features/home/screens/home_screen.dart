@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import '../../../shared/widgets/dashboard_card.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../flights/screens/flights_screen.dart';
-import '../../taxi/screens/taxi_screen.dart';
-import '../../hotels/screens/hotels_screen.dart';
 import '../../prayer/screens/prayer_screen.dart';
 import '../../announcements/screens/announcements_screen.dart';
 import '../../airport_guide/screens/airport_guide_screen.dart';
-import '../../lost_found/screens/lost_found_screen.dart';
 import '../../support/screens/support_screen.dart';
+import '../../auth/screens/login_required_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,14 +15,21 @@ class HomeScreen extends StatelessWidget {
     Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
   }
 
+  void requireLogin(BuildContext context, String featureName) {
+    openScreen(
+      context,
+      LoginRequiredScreen(featureName: featureName),
+    );
+  }
+
   Widget quickAction({
     required BuildContext context,
     required IconData icon,
     required String title,
-    required Widget screen,
+    required VoidCallback onTap,
   }) {
     return InkWell(
-      onTap: () => openScreen(context, screen),
+      onTap: onTap,
       borderRadius: BorderRadius.circular(16),
       child: Container(
         padding: const EdgeInsets.all(12),
@@ -85,21 +90,18 @@ class HomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'Flights, taxis, hotels, prayer times and airport services in one place.',
+                  'Browse public services or login for bookings and reports.',
                   style: TextStyle(color: Colors.white70),
                 ),
               ],
             ),
           ),
-
           const SizedBox(height: 24),
-
           const Text(
             'Quick Actions',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-
           GridView.count(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -112,37 +114,34 @@ class HomeScreen extends StatelessWidget {
                 context: context,
                 icon: Icons.flight_takeoff,
                 title: 'Flights',
-                screen: const FlightsScreen(),
+                onTap: () => openScreen(context, const FlightsScreen()),
               ),
               quickAction(
                 context: context,
                 icon: Icons.local_taxi,
                 title: 'Taxi',
-                screen: const TaxiScreen(),
+                onTap: () => requireLogin(context, 'Airport Taxi'),
               ),
               quickAction(
                 context: context,
                 icon: Icons.hotel,
                 title: 'Hotels',
-                screen: const HotelsScreen(),
+                onTap: () => requireLogin(context, 'Hotels'),
               ),
               quickAction(
                 context: context,
                 icon: Icons.mosque,
                 title: 'Prayer',
-                screen: const PrayerScreen(),
+                onTap: () => openScreen(context, const PrayerScreen()),
               ),
             ],
           ),
-
           const SizedBox(height: 24),
-
           const Text(
             'Airport Services',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 12),
-
           DashboardCard(
             icon: Icons.campaign,
             title: 'Announcements',
@@ -159,7 +158,7 @@ class HomeScreen extends StatelessWidget {
             icon: Icons.luggage,
             title: 'Lost & Found',
             subtitle: 'Report or recover lost items',
-            onTap: () => openScreen(context, const LostFoundScreen()),
+            onTap: () => requireLogin(context, 'Lost & Found'),
           ),
           DashboardCard(
             icon: Icons.support_agent,
@@ -172,6 +171,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
-
-

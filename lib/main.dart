@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'core/theme/app_theme.dart';
 import 'features/splash/screens/splash_screen.dart';
 
 void main() {
@@ -13,10 +14,7 @@ class ZiaConnectApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'ZIA Connect',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.green,
-      ),
+      theme: AppTheme.lightTheme,
       home: const SplashScreen(),
     );
   }

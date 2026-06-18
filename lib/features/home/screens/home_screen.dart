@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../flights/screens/flights_screen.dart';
 import '../../taxi/screens/taxi_screen.dart';
+import '../../hotels/screens/hotels_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -42,65 +43,39 @@ class HomeScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  'Welcome to',
-                  style: TextStyle(color: Colors.white70),
-                ),
+                Text('Welcome to', style: TextStyle(color: Colors.white70)),
                 SizedBox(height: 6),
                 Text(
                   'Zamfara International Airport',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
           ),
-
           const SizedBox(height: 20),
-
           buildCard(
             icon: Icons.flight_takeoff,
             title: 'Flights',
             subtitle: 'Arrivals, departures and status',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const FlightsScreen(),
-                ),
-              );
-            },
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const FlightsScreen())),
           ),
-
           buildCard(
             icon: Icons.local_taxi,
             title: 'Airport Taxi',
             subtitle: 'Book a verified taxi',
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const TaxiScreen(),
-                ),
-              );
-            },
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const TaxiScreen())),
           ),
-
           buildCard(
             icon: Icons.hotel,
             title: 'Hotels',
             subtitle: 'Nearby hotels and reservations',
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const HotelsScreen())),
           ),
-
           buildCard(
             icon: Icons.mosque,
             title: 'Prayer Times',
             subtitle: 'Prayer schedule and Qiblah',
           ),
-
           buildCard(
             icon: Icons.campaign,
             title: 'Announcements',

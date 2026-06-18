@@ -3,6 +3,7 @@ import '../../flights/screens/flights_screen.dart';
 import '../../taxi/screens/taxi_screen.dart';
 import '../../hotels/screens/hotels_screen.dart';
 import '../../prayer/screens/prayer_screen.dart';
+import '../../announcements/screens/announcements_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -79,6 +80,7 @@ class HomeScreen extends StatelessWidget {
             icon: Icons.campaign,
             title: 'Announcements',
             subtitle: 'Airport updates and alerts',
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const AnnouncementsScreen())),
           ),
         ],
       ),

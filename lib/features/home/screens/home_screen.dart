@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../flights/screens/flights_screen.dart';
+import '../../taxi/screens/taxi_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -41,7 +42,10 @@ class HomeScreen extends StatelessWidget {
             child: const Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Welcome to', style: TextStyle(color: Colors.white70)),
+                Text(
+                  'Welcome to',
+                  style: TextStyle(color: Colors.white70),
+                ),
                 SizedBox(height: 6),
                 Text(
                   'Zamfara International Airport',
@@ -54,7 +58,9 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+
           const SizedBox(height: 20),
+
           buildCard(
             icon: Icons.flight_takeoff,
             title: 'Flights',
@@ -62,25 +68,39 @@ class HomeScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const FlightsScreen()),
+                MaterialPageRoute(
+                  builder: (_) => const FlightsScreen(),
+                ),
               );
             },
           ),
+
           buildCard(
             icon: Icons.local_taxi,
             title: 'Airport Taxi',
             subtitle: 'Book a verified taxi',
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const TaxiScreen(),
+                ),
+              );
+            },
           ),
+
           buildCard(
             icon: Icons.hotel,
             title: 'Hotels',
             subtitle: 'Nearby hotels and reservations',
           ),
+
           buildCard(
             icon: Icons.mosque,
             title: 'Prayer Times',
             subtitle: 'Prayer schedule and Qiblah',
           ),
+
           buildCard(
             icon: Icons.campaign,
             title: 'Announcements',

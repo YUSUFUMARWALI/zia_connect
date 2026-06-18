@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../flights/screens/flights_screen.dart';
 import '../../taxi/screens/taxi_screen.dart';
 import '../../hotels/screens/hotels_screen.dart';
+import '../../prayer/screens/prayer_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -27,10 +28,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ZIA Connect'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('ZIA Connect'), centerTitle: true),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -75,6 +73,7 @@ class HomeScreen extends StatelessWidget {
             icon: Icons.mosque,
             title: 'Prayer Times',
             subtitle: 'Prayer schedule and Qiblah',
+            onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => const PrayerScreen())),
           ),
           buildCard(
             icon: Icons.campaign,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'flight_details_screen.dart';
 
 class FlightsScreen extends StatelessWidget {
   const FlightsScreen({super.key});
@@ -51,6 +52,19 @@ class FlightsScreen extends StatelessWidget {
 
           return Card(
             child: ListTile(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => FlightDetailsScreen(
+                      flight: flight['flight']!,
+                      route: flight['route']!,
+                      time: flight['time']!,
+                      status: flight['status']!,
+                    ),
+                  ),
+                );
+              },
               leading: const Icon(Icons.flight_takeoff),
               title: Text(flight['flight']!),
               subtitle: Text('${flight['route']}  ${flight['time']}'),

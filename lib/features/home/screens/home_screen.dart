@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
       onTap: () => openScreen(context, screen),
       borderRadius: BorderRadius.circular(16),
       child: Container(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Icon(icon, color: AppColors.primaryGreen, size: 34),
+            Icon(icon, color: AppColors.primaryGreen, size: 26),
             const SizedBox(height: 10),
             Text(
               title,
@@ -104,8 +104,9 @@ class HomeScreen extends StatelessWidget {
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             crossAxisCount: 2,
-            crossAxisSpacing: 12,
-            mainAxisSpacing: 12,
+            childAspectRatio: 1.6,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
             children: [
               quickAction(
                 context: context,
@@ -171,3 +172,6 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
+
+
+

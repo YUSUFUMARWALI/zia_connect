@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../shared/widgets/dashboard_card.dart';
+import '../../../core/constants/app_colors.dart';
 import '../../flights/screens/flights_screen.dart';
 import '../../taxi/screens/taxi_screen.dart';
 import '../../hotels/screens/hotels_screen.dart';
@@ -13,59 +14,134 @@ class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   void openScreen(BuildContext context, Widget screen) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => screen),
+    Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
+  }
+
+  Widget quickAction({
+    required BuildContext context,
+    required IconData icon,
+    required String title,
+    required Widget screen,
+  }) {
+    return InkWell(
+      onTap: () => openScreen(context, screen),
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        padding: const EdgeInsets.all(18),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.06),
+              blurRadius: 12,
+              offset: const Offset(0, 6),
+            ),
+          ],
+        ),
+        child: Column(
+          children: [
+            Icon(icon, color: AppColors.primaryGreen, size: 34),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ZIA Connect')),
+      appBar: AppBar(
+        title: const Text('ZIA Connect'),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
           Container(
-            padding: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(22),
             decoration: BoxDecoration(
-              color: Colors.green.shade700,
-              borderRadius: BorderRadius.circular(16),
+              color: AppColors.primaryGreen,
+              borderRadius: BorderRadius.circular(20),
             ),
-            child: const Text(
-              'Welcome to\nZamfara International Airport',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
+            child: const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Icon(Icons.flight_takeoff, color: Colors.white, size: 38),
+                SizedBox(height: 12),
+                Text(
+                  'Welcome to\nZamfara International Airport',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    height: 1.2,
+                  ),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Flights, taxis, hotels, prayer times and airport services in one place.',
+                  style: TextStyle(color: Colors.white70),
+                ),
+              ],
+            ),
+          ),
+
+          const SizedBox(height: 24),
+
+          const Text(
+            'Quick Actions',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 12),
+
+          GridView.count(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            crossAxisCount: 2,
+            crossAxisSpacing: 12,
+            mainAxisSpacing: 12,
+            children: [
+              quickAction(
+                context: context,
+                icon: Icons.flight_takeoff,
+                title: 'Flights',
+                screen: const FlightsScreen(),
               ),
-            ),
+              quickAction(
+                context: context,
+                icon: Icons.local_taxi,
+                title: 'Taxi',
+                screen: const TaxiScreen(),
+              ),
+              quickAction(
+                context: context,
+                icon: Icons.hotel,
+                title: 'Hotels',
+                screen: const HotelsScreen(),
+              ),
+              quickAction(
+                context: context,
+                icon: Icons.mosque,
+                title: 'Prayer',
+                screen: const PrayerScreen(),
+              ),
+            ],
           ),
-          const SizedBox(height: 20),
-          DashboardCard(
-            icon: Icons.flight_takeoff,
-            title: 'Flights',
-            subtitle: 'Arrivals, departures and status',
-            onTap: () => openScreen(context, const FlightsScreen()),
+
+          const SizedBox(height: 24),
+
+          const Text(
+            'Airport Services',
+            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          DashboardCard(
-            icon: Icons.local_taxi,
-            title: 'Airport Taxi',
-            subtitle: 'Book a verified taxi',
-            onTap: () => openScreen(context, const TaxiScreen()),
-          ),
-          DashboardCard(
-            icon: Icons.hotel,
-            title: 'Hotels',
-            subtitle: 'Nearby hotels and reservations',
-            onTap: () => openScreen(context, const HotelsScreen()),
-          ),
-          DashboardCard(
-            icon: Icons.mosque,
-            title: 'Prayer Times',
-            subtitle: 'Prayer schedule and Qiblah',
-            onTap: () => openScreen(context, const PrayerScreen()),
-          ),
+          const SizedBox(height: 12),
+
           DashboardCard(
             icon: Icons.campaign,
             title: 'Announcements',

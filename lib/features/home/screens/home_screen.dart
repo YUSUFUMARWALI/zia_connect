@@ -7,6 +7,10 @@ import '../../announcements/screens/announcements_screen.dart';
 import '../../airport_guide/screens/airport_guide_screen.dart';
 import '../../support/screens/support_screen.dart';
 import '../../auth/screens/login_required_screen.dart';
+import '../../auth/services/auth_service.dart';
+import '../../taxi/screens/taxi_screen.dart';
+import '../../hotels/screens/hotels_screen.dart';
+import '../../lost_found/screens/lost_found_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,11 +19,12 @@ class HomeScreen extends StatelessWidget {
     Navigator.push(context, MaterialPageRoute(builder: (_) => screen));
   }
 
-  void requireLogin(BuildContext context, String featureName) {
-    openScreen(
-      context,
-      LoginRequiredScreen(featureName: featureName),
-    );
+  void protectedRoute(BuildContext context, String featureName, Widget screen) {
+    if (AuthService.isLoggedIn) {
+      openScreen(context, screen);
+    } else {
+      openScreen(context, LoginRequiredScreen(featureName: featureName));
+    }
   }
 
   Widget quickAction({
@@ -62,9 +67,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('ZIA Connect'),
-      ),
+      appBar: AppBar(title: const Text('ZIA Connect')),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
@@ -120,13 +123,21 @@ class HomeScreen extends StatelessWidget {
                 context: context,
                 icon: Icons.local_taxi,
                 title: 'Taxi',
-                onTap: () => requireLogin(context, 'Airport Taxi'),
+                onTap: () => protectedRoute(
+                  context,
+                  'Airport Taxi',
+                  const TaxiScreen(),
+                ),
               ),
               quickAction(
                 context: context,
                 icon: Icons.hotel,
                 title: 'Hotels',
-                onTap: () => requireLogin(context, 'Hotels'),
+                onTap: () => protectedRoute(
+                  context,
+                  'Hotels',
+                  const HotelsScreen(),
+                ),
               ),
               quickAction(
                 context: context,
@@ -158,7 +169,11 @@ class HomeScreen extends StatelessWidget {
             icon: Icons.luggage,
             title: 'Lost & Found',
             subtitle: 'Report or recover lost items',
-            onTap: () => requireLogin(context, 'Lost & Found'),
+            onTap: () => protectedRoute(
+              context,
+              'Lost & Found',
+              const LostFoundScreen(),
+            ),
           ),
           DashboardCard(
             icon: Icons.support_agent,

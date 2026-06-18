@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../../core/constants/app_colors.dart';
+import '../services/auth_service.dart';
 import '../../home/screens/home_screen.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
 
-  void openHome(BuildContext context) {
+  void register(BuildContext context) {
+    AuthService.login();
+
     Navigator.pushReplacement(
       context,
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
+      MaterialPageRoute(
+        builder: (_) => const HomeScreen(),
+      ),
     );
   }
 
@@ -27,20 +31,19 @@ class RegisterScreen extends StatelessWidget {
                   const Icon(
                     Icons.person_add,
                     size: 70,
-                    color: AppColors.primaryGreen,
                   ),
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 16),
                   const Text(
                     'Create Account',
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      fontSize: 28,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  const SizedBox(height: 6),
-                  const Text('Join ZIA Connect today'),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 20),
                   const TextField(
                     decoration: InputDecoration(
                       labelText: 'Full Name',
-                      prefixIcon: Icon(Icons.person),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -48,7 +51,6 @@ class RegisterScreen extends StatelessWidget {
                   const TextField(
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      prefixIcon: Icon(Icons.email),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -57,7 +59,6 @@ class RegisterScreen extends StatelessWidget {
                     obscureText: true,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      prefixIcon: Icon(Icons.lock),
                       border: OutlineInputBorder(),
                     ),
                   ),
@@ -65,7 +66,7 @@ class RegisterScreen extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => openHome(context),
+                      onPressed: () => register(context),
                       child: const Text('Register'),
                     ),
                   ),

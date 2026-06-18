@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../home/screens/home_screen.dart';
+import '../../auth/screens/login_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +20,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (!mounted) return;
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
         );
       },
     );
@@ -38,11 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(height: 20),
             Text(
               'ZIA Connect',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 32,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 10),
             Text(

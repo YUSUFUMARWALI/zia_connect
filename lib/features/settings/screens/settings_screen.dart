@@ -1,22 +1,15 @@
 import 'package:flutter/material.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
 
-  Widget settingsTile({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-  }) {
-    return Card(
-      child: ListTile(
-        leading: Icon(icon),
-        title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(subtitle),
-        trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-      ),
-    );
-  }
+  @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  bool notificationsEnabled = true;
+  bool darkModeEnabled = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,25 +20,45 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          settingsTile(
-            icon: Icons.language,
-            title: 'Language',
-            subtitle: 'English, Hausa and more coming soon',
+          Card(
+            child: SwitchListTile(
+              value: notificationsEnabled,
+              onChanged: (value) {
+                setState(() {
+                  notificationsEnabled = value;
+                });
+              },
+              title: const Text('Notifications'),
+              subtitle: const Text('Flight and airport alerts'),
+            ),
           ),
-          settingsTile(
-            icon: Icons.notifications,
-            title: 'Notifications',
-            subtitle: 'Manage flight and airport alerts',
+          Card(
+            child: SwitchListTile(
+              value: darkModeEnabled,
+              onChanged: (value) {
+                setState(() {
+                  darkModeEnabled = value;
+                });
+              },
+              title: const Text('Dark Mode'),
+              subtitle: const Text('Coming soon'),
+            ),
           ),
-          settingsTile(
-            icon: Icons.dark_mode,
-            title: 'Appearance',
-            subtitle: 'Dark mode coming soon',
+          const Card(
+            child: ListTile(
+              leading: Icon(Icons.language),
+              title: Text('Language'),
+              subtitle: Text('English, Hausa and more coming soon'),
+            ),
           ),
-          settingsTile(
-            icon: Icons.info,
-            title: 'About ZIA Connect',
-            subtitle: 'Digital airport companion for Zamfara International Airport',
+          const Card(
+            child: ListTile(
+              leading: Icon(Icons.info),
+              title: Text('About ZIA Connect'),
+              subtitle: Text(
+                'Digital airport companion for Zamfara International Airport',
+              ),
+            ),
           ),
         ],
       ),

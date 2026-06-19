@@ -11,6 +11,7 @@ import '../../auth/services/auth_service.dart';
 import '../../taxi/screens/taxi_screen.dart';
 import '../../hotels/screens/hotels_screen.dart';
 import '../../lost_found/screens/lost_found_screen.dart';
+import '../../profile/screens/profile_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -67,7 +68,16 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('ZIA Connect')),
+      appBar: AppBar(
+        title: const Text('ZIA Connect'),
+        actions: [
+          IconButton(
+            tooltip: 'Profile',
+            icon: const Icon(Icons.person),
+            onPressed: () => openScreen(context, const ProfileScreen()),
+          ),
+        ],
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [

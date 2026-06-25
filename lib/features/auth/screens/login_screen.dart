@@ -3,19 +3,54 @@ import '../services/auth_service.dart';
 import '../../../shared/navigation/main_navigation.dart';
 import 'register_screen.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
-  void login(BuildContext context) {
-    AuthService.login();
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
 
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const MainNavigation()),
-    );
+class _LoginScreenState extends State<LoginScreen> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  bool isLoading = false;
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 
-  void openRegister(BuildContext context) {
+  Future<void> login() async {
+    setState(() => isLoading = true);
+
+    try {
+      await AuthService.login(
+        email: emailController.text,
+        password: passwordController.text,
+      );
+
+      if (!mounted) return;
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (_) => const MainNavigation()),
+      );
+    } catch (error) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login failed: $error')),
+      );
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
+    }
+  }
+
+  void openRegister() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const RegisterScreen()),
@@ -41,24 +76,33 @@ class LoginScreen extends StatelessWidget {
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
-                  const TextField(
-                    decoration: InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
+                  TextField(
+                    controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                   const SizedBox(height: 16),
-                  const TextField(
+                  TextField(
+                    controller: passwordController,
                     obscureText: true,
-                    decoration: InputDecoration(labelText: 'Password', border: OutlineInputBorder()),
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
+                      border: OutlineInputBorder(),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      onPressed: () => login(context),
-                      child: const Text('Login'),
+                      onPressed: isLoading ? null : login,
+                      child: Text(isLoading ? 'Logging in...' : 'Login'),
                     ),
                   ),
                   TextButton(
-                    onPressed: () => openRegister(context),
+                    onPressed: openRegister,
                     child: const Text('Create new account'),
                   ),
                 ],
